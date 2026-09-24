@@ -1,0 +1,59 @@
+[
+  {
+    "file": "01_基本介紹.md",
+    "route": "members/",
+    "id": "profile",
+    "title": "基本資料"
+  },
+  {
+    "file": "02_學歷.md",
+    "route": "members/",
+    "id": "education",
+    "title": "學歷"
+  },
+  {
+    "file": "03_經歷.md",
+    "route": "members/",
+    "id": "experience",
+    "title": "任職與研究經歷"
+  },
+  {
+    "file": "04_研究方向與成果.md",
+    "route": "",
+    "id": "research",
+    "title": "研究方向",
+    "part": "directions"
+  },
+  {
+    "file": "05_期刊論文.md",
+    "route": "members/",
+    "id": "journals",
+    "title": "期刊論文"
+  },
+  {
+    "file": "06_研討會論文.md",
+    "route": "members/",
+    "id": "conferences",
+    "title": "研討會論文",
+    "part": "bibliography"
+  },
+  {
+    "file": "06_研討會論文.md",
+    "route": "members/",
+    "id": "awards",
+    "title": "獲獎紀錄",
+    "part": "awards"
+  },
+  {
+    "file": "07_專利.md",
+    "route": "members/",
+    "id": "patents",
+    "title": "發明專利"
+  },
+  {
+    "file": "08_教授課程.md",
+    "route": "members/",
+    "id": "courses",
+    "title": "教授課程"
+  }
+]

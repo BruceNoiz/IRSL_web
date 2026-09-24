@@ -1,0 +1,29 @@
+---
+import type { Language } from '../../shared/content/i18n';
+interface Props { lang?: Language }
+const { lang = 'zh-Hant' } = Astro.props;
+import { facultyLabels } from './content/labels';
+const text = facultyLabels[lang];
+import { education, experience } from './content/academic';
+---
+<div class="academic-record">
+  <section id="education" aria-labelledby="education-title">
+    <h2 id="education-title">{text.education}</h2>
+    <ol>{education.map(item => <li><h3>{lang === 'en' ? item.degreeEn : item.degree}</h3><p>{lang === 'en' ? item.schoolEn : item.school} {lang === 'en' ? item.departmentEn : item.department}</p><p class="record-period">{lang === 'en' ? item.period.replace('迄今', 'present') : item.period}</p></li>)}</ol>
+  </section>
+  <section id="experience" aria-labelledby="experience-title">
+    <h2 id="experience-title">{text.experience}</h2>
+    <ol>{experience.map(item => <li><h3>{lang === 'en' ? item.positionEn : item.position}</h3><p>{lang === 'en' ? item.institutionEn : item.institution}</p><p class="record-period">{lang === 'en' ? item.period.replace('迄今', 'present') : item.period}</p></li>)}</ol>
+  </section>
+</div>
+<style>
+  .academic-record { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.5rem; padding-block: 2rem; }
+  h2 { font-size: 1.25rem; margin-bottom: 1.5rem; }
+  ol { padding: 0; list-style: none; margin: 0; }
+  li { padding-left: 1rem; border-left: 2px solid var(--line); }
+  li + li { margin-top: 1.5rem; }
+  h3 { font-size: 1rem; font-weight: 650; margin-bottom: .25rem; }
+  p { margin: 0; }
+  .record-period { color: var(--muted); font-size: .875rem; font-variant-numeric: tabular-nums; white-space: nowrap; margin-top: .3rem; }
+  @media (max-width: 1100px) { .academic-record { grid-template-columns: 1fr; gap: 2rem; } }
+</style>

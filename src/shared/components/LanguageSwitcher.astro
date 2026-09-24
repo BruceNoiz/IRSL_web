@@ -1,0 +1,21 @@
+---
+import { ui, type Language } from '../content/i18n';
+import { localizedPath } from '../lib/paths';
+interface Props { lang: Language; path: string; anchors: string[] }
+const { lang, path, anchors } = Astro.props;
+// :target selects a real static link pair even when JavaScript is disabled.
+const targets = anchors.map(id => `[id=${JSON.stringify(id)}]:target`).join(',');
+const rules = `body:has(${targets}) .language-default{display:none}` + anchors.map((id, index) =>
+  `body:has([id=${JSON.stringify(id)}]:target) .language-options[data-section="${index}"]{display:flex}`
+).join('');
+---
+<style is:inline set:html={rules}></style>
+<nav class="language-switcher" aria-label={ui[lang].language}>
+  {['', ...anchors].map((id, index) => (
+    <span class:list={['language-options', { 'language-default': index === 0 }]} data-section={index - 1}>
+      <a href={`${localizedPath(path, 'zh-Hant')}${id ? `#${encodeURIComponent(id)}` : ''}`} lang="zh-Hant" hreflang="zh-Hant" aria-label="繁體中文" aria-current={lang === 'zh-Hant' ? 'true' : undefined}>中文</a>
+      <span aria-hidden="true">/</span>
+      <a href={`${localizedPath(path, 'en')}${id ? `#${encodeURIComponent(id)}` : ''}`} lang="en" hreflang="en" aria-label="English" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+    </span>
+  ))}
+</nav>

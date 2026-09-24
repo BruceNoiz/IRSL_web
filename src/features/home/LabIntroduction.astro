@@ -1,0 +1,18 @@
+---
+import type { Language } from '../../shared/content/i18n';
+interface Props { lang?: Language }
+const { lang = 'zh-Hant' } = Astro.props;
+import { Content as ChineseContent } from './content/introduction.md';
+import { Content as EnglishContent } from './content/introduction.en.md';
+const Content = lang === 'en' ? EnglishContent : ChineseContent;
+---
+<section id="introduction" aria-labelledby="introduction-title">
+  <h2 id="introduction-title">{lang === 'en' ? 'About the lab' : '實驗室簡介'}</h2>
+  <div class="introduction-copy"><Content /></div>
+</section>
+<style>
+  section { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 2rem; padding: 2.5rem 0 3rem; }
+  .introduction-copy { max-width: 50rem; line-height: 1.95; }
+  .introduction-copy :global(p) { margin: 0; }
+  @media (max-width: 760px) { section { grid-template-columns: 1fr; padding: 2rem 0; gap: .25rem; } }
+</style>

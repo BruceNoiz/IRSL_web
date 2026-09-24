@@ -1,0 +1,11 @@
+---
+import SiteLayout from '../shared/layouts/SiteLayout.astro';
+import MemberList from '../features/team/MemberList.astro';
+import { ui, type Language } from '../shared/content/i18n';
+interface Props { lang?: Language }
+const { lang = 'zh-Hant' } = Astro.props;
+const text = ui[lang];
+---
+<SiteLayout title={text.team} description={text.teamDescription} lang={lang} path="team/">
+  <div class="page-shell team-page"><MemberList lang={lang} /></div>
+</SiteLayout>

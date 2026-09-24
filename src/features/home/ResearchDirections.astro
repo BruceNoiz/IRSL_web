@@ -1,0 +1,35 @@
+---
+import type { Language } from '../../shared/content/i18n';
+interface Props { lang?: Language }
+const { lang = 'zh-Hant' } = Astro.props;
+import source from './content/research.md?raw';
+import sourceEn from './content/research.en.md?raw';
+import { tableRows } from '../../shared/lib/markdown-table.mjs';
+import { researchIcon } from './research-icons.mjs';
+const originals = tableRows(source);
+const directions = lang === 'en' ? tableRows(sourceEn) : originals;
+---
+<div class="research-section">
+  <p class="section-kicker">RESEARCH</p>
+  <section id="research" aria-labelledby="research-title">
+    <h2 id="research-title"><span lang="en">What we do?</span><span class="research-subtitle">{lang === 'en' ? 'Research areas' : '研究方向'}</span></h2>
+    <dl class="research-list">{directions.map(([name, description], index) => <div><dt><Fragment set:html={researchIcon(originals[index][0])} />{name}</dt><dd>{description}</dd></div>)}</dl>
+  </section>
+</div>
+<style>
+  .research-section { border-top: 1px solid var(--ink); padding: 1.5rem 0 0; }
+  h2 { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1.25rem; font-size: clamp(1.75rem, 3vw, 2.25rem); }
+  .research-subtitle { font-size: 1rem; font-weight: 500; color: var(--muted); }
+  .research-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 1.5rem 0 2.5rem; border-left: 1px solid var(--line); border-top: 1px solid var(--line); }
+  .research-list > div { padding: 1.5rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  :global(.research-icon) { display: block; width: 2.5rem; height: 2.5rem; margin-bottom: 1.25rem; color: var(--accent); }
+  dt { color: var(--ink); font-size: 1.1rem; font-weight: 650; margin-bottom: .6rem; }
+  dd { margin: 0; }
+  @media (max-width: 1000px) { .research-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) {
+    .research-list { grid-template-columns: 1fr; }
+    .research-list > div { padding: 1.25rem; }
+    dt { position: relative; padding-left: 3.5rem; min-height: 2.5rem; display: flex; align-items: center; }
+    :global(.research-icon) { position: absolute; left: 0; top: 0; margin: 0; }
+  }
+</style>

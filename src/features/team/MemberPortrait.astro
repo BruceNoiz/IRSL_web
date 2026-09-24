@@ -1,0 +1,12 @@
+---
+import type { ImageMetadata } from 'astro';
+interface Props { photo: ImageMetadata | null; alt: string }
+const { photo, alt } = Astro.props;
+---
+{photo ? <img class="member-portrait" src={photo.src} alt={alt} width={photo.width} height={photo.height} loading="lazy" /> :
+  <svg class="member-portrait placeholder-portrait" viewBox="0 0 240 280" width="240" height="280" role="img" aria-label={alt}>
+    <circle cx="120" cy="104" r="30" />
+    <path d="M60 220v-22a60 60 0 0 1 120 0v22" />
+    <path class="portrait-guide" d="M20 32h16M28 24v16M204 248h16M212 240v16" />
+  </svg>
+}

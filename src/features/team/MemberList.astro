@@ -1,0 +1,15 @@
+---
+import type { Language } from '../../shared/content/i18n';
+interface Props { lang?: Language }
+const { lang = 'zh-Hant' } = Astro.props;
+import MemberPortrait from './MemberPortrait.astro';
+import { memberGroups } from './content/members';
+import './team.css';
+---
+    <header class="team-introduction">
+      <p class="eyebrow">IRSL / PEOPLE</p><h1>{lang === 'en' ? 'Lab Members' : '實驗室成員'}</h1>
+    </header>
+    {memberGroups.map((group) => <section id={group.id} class="member-group" aria-labelledby={`${group.id}-title`}>
+      <header><p class="section-kicker">{group.label}</p><h2 id={`${group.id}-title`}>{lang === 'en' ? group.titleEn : group.title}</h2></header>
+      <ul class="member-list">{group.members.map((member) => <li><MemberPortrait {...member} alt={lang === 'en' ? (member.altEn ?? member.alt) : member.alt} />{member.name && <p>{member.name}</p>}</li>)}</ul>
+    </section>)}

@@ -1,0 +1,15 @@
+---
+import SiteLayout from '../shared/layouts/SiteLayout.astro';
+import FacultyProfile from '../features/faculty/FacultyProfile.astro';
+import FacultyContent from '../features/faculty/FacultyContent.astro';
+import { ui, type Language } from '../shared/content/i18n';
+interface Props { lang?: Language }
+const { lang = 'zh-Hant' } = Astro.props;
+const text = ui[lang];
+---
+<SiteLayout title={text.faculty} description={text.facultyDescription} lang={lang} path="members/">
+  <div class="page-shell faculty-page">
+    <FacultyProfile lang={lang} />
+    <FacultyContent lang={lang} />
+  </div>
+</SiteLayout>

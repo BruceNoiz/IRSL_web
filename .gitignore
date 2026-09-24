@@ -1,0 +1,68 @@
+# Local metadata and Word lock files
+.DS_Store
+~$*
+
+# Node dependencies and Astro build output
+node_modules/
+dist/
+.astro/
+
+# Package manager debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python caches
+__pycache__/
+*.py[cod]
+.venv/
+
+# Local configuration (examples may be committed)
+.env
+.env.*
+!.env.example
+
+# User-provided source documents, extracted content and original images (local only)
+/artifact/
+
+# Website copies of supplied content and photos, including future member records
+/src/features/*/assets/
+/src/features/home/content/
+/src/features/faculty/content/*
+!/src/features/faculty/content/labels.ts
+/src/features/team/content/
+/src/shared/content/site.ts
+/src/shared/content/i18n.ts
+# This component currently embeds the person's name in the portrait import path
+/src/features/faculty/FacultyProfile.astro
+
+# Local task/review records and handover documents contain supplied personal details
+/.agent/TASK.md
+/.agent/REVIEW.md
+/docs/CONTENT_MAP.md
+/docs/IMPLEMENTATION.md
+/docs/MAINTENANCE.md
+
+# These acceptance checks currently embed personal details or named photo paths
+/tests/assets.test.mjs
+/tests/browser/site.spec.mjs
+/tests/check_static.py
+/tests/check_maintenance.py
+/tests/test_site.py
+
+# Former content locations; prevent accidentally restoring tracked personal copies
+/src/content/assets.json
+/src/content/site.ts
+/src/pages/contact.astro
+/src/pages/publications.astro
+/src/pages/teaching.astro
+
+# Browser reports and screenshots can contain rendered personal details
+/test-results/
+/playwright-report/
+/blob-report/
+
+# Task output; keep the directory in Git
+.agent/logs/*
+!.agent/logs/.gitkeep
