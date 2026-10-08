@@ -1,0 +1,59 @@
+---
+import Navigation from '../components/Navigation';
+import { navigation, laboratory, mapQuery, addressEn } from '../content/site';
+import { localizedPath } from '../lib/paths';
+import { ui, type Language } from '../content/i18n';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import '../styles/global.css';
+
+interface Props { title: string; description: string; lang: Language; path: string }
+const { title, description, lang, path } = Astro.props;
+const text = ui[lang];
+const address = lang === 'en' ? addressEn : laboratory.address;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+// Read IDs from the rendered content so language links also cover new sections.
+const content = await Astro.slots.render('default');
+const anchors = ['main-navigation', 'main', ...Array.from(content.matchAll(/\sid="([^"]+)"/g), match => match[1])];
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#543e2f" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23543e2f'/%3E%3Ctext x='20' y='29' fill='white' font-family='sans-serif' font-size='28' text-anchor='middle'%3EI%3C/text%3E%3C/svg%3E" />
+    <title>{title}｜{text.labName}</title>
+    {canonical && <link rel="canonical" href={canonical} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{text.skip}</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href={localizedPath('', lang)} aria-label={text.homeLabel}>
+          <strong>IRSL<span aria-hidden="true">.</span></strong><span>{text.brand}</span>
+        </a>
+        <div class="header-controls">
+          <Navigation items={navigation.map(({ path, key }) => ({ href: localizedPath(path, lang), label: text[key] }))}
+            current={Astro.url.pathname} labels={text} client:media="(max-width: 640px)" />
+          <LanguageSwitcher lang={lang} path={path} anchors={anchors} />
+        </div>
+      </div>
+    </header>
+    <main id="main" tabindex="-1"><Fragment set:html={content} /></main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-contact">
+          <h2 class="footer-brand">{text.labName}</h2>
+          <dl><div><dt>{text.phone}</dt><dd>{laboratory.phone}</dd></div><div><dt>{text.address}</dt><dd>{address}</dd></div></dl>
+        </div>
+        <div class="lab-location">
+          <h2>{text.location}</h2>
+          <address>{address}</address>
+          <a class="text-link" href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`}>{text.openMap}</a>
+          <iframe class="location-map" title={lang === 'en' ? `IRSL Laboratory location: ${address}` : `IRSL 實驗室位置：${address}`} src={`https://maps.google.com/maps?q=${mapQuery}&output=embed`} loading="lazy" referrerpolicy="no-referrer-when-downgrade" width="640" height="400"></iframe>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

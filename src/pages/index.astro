@@ -1,0 +1,17 @@
+---
+import SiteLayout from '../shared/layouts/SiteLayout.astro';
+import LabIdentity from '../features/home/LabIdentity.astro';
+import LabIntroduction from '../features/home/LabIntroduction.astro';
+import ResearchDirections from '../features/home/ResearchDirections.astro';
+import { ui, type Language } from '../shared/content/i18n';
+interface Props { lang?: Language }
+const { lang = 'zh-Hant' } = Astro.props;
+const text = ui[lang];
+---
+<SiteLayout title={text.home} description={text.homeDescription} lang={lang} path="">
+  <div class="page-shell home-page">
+    <LabIdentity lang={lang} />
+    <LabIntroduction lang={lang} />
+    <ResearchDirections lang={lang} />
+  </div>
+</SiteLayout>

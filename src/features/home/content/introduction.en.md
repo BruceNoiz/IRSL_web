@@ -1,0 +1,3 @@
+# About the lab
+
+IRSL Laboratory focuses on net-zero carbon emissions and reducing energy use. Combining machine learning, data analysis, smart sensing and equipment control, we study energy efficiency, indoor air quality, thermal comfort and disease transmission in buildings. Our research spans building energy efficiency and environmental control, indoor air quality and thermal comfort, smart sensing and equipment control, building information modeling (BIM), algorithms and resource optimization, and urban climate and public risk communication. Through data-driven methods and interdisciplinary integration, we seek solutions that balance environmental quality, user needs and resource efficiency.

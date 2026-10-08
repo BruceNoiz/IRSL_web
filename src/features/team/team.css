@@ -1,0 +1,12 @@
+.team-introduction { padding: 1.5rem 0 2rem 2rem; border-left: 8px solid var(--accent); }
+.member-group { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--ink); }
+.member-list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.5rem; padding: 0; margin: 1.5rem 0 0; list-style: none; }
+.member-portrait { display: block; width: 100%; height: auto; aspect-ratio: 6 / 7; object-fit: contain; border: 1px solid var(--line); }
+.placeholder-portrait { background: var(--surface); fill: none; stroke: #8a735d; stroke-width: 1.5; }
+.portrait-guide { stroke: var(--line); }
+.member-list p { margin: .7rem 0 0; color: var(--muted); }
+@media (max-width: 1000px) { .member-list { gap: 1rem; } }
+@media (max-width: 760px) {
+  .team-introduction { padding: 1rem 0 1.5rem 1.25rem; border-left-width: 4px; }
+  .member-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 1rem; }
+}

@@ -1,0 +1,33 @@
+---
+import type { Language } from '../../shared/content/i18n';
+interface Props { lang?: Language }
+const { lang = 'zh-Hant' } = Astro.props;
+import source from './content/courses.md?raw';
+import sourceEn from './content/courses.en.md?raw';
+import { facultyLabels } from './content/labels';
+const text = facultyLabels[lang];
+import { tableRows } from '../../shared/lib/markdown-table.mjs';
+const courses = tableRows(lang === 'en' ? sourceEn : source);
+const rules = courses.map((_, index) => `#course-${index + 1}:checked~.course-panels #course-panel-${index + 1}{display:block}`
+  + `#course-${index + 1}:checked~.course-list label[for="course-${index + 1}"]{color:var(--ink);background:var(--paper);border-left-color:var(--accent)}`
+  + `#course-${index + 1}:focus-visible~.course-list label[for="course-${index + 1}"]{outline:3px solid #744222;outline-offset:-3px}`).join('');
+---
+<section id="courses" class="artifact-section" aria-labelledby="courses-title">
+  <h2 id="courses-title">{text.courses}</h2>
+  <style is:inline set:html={rules}></style>
+  <fieldset class="course-picker">
+    <legend class="visually-hidden">{text.chooseCourse}</legend>
+    {courses.map((_, index) => <input class="visually-hidden" type="radio" name="course" id={`course-${index + 1}`} checked={index === 0} />)}
+    <div class="course-list">
+      {courses.map(([name, , level], index) => <label for={`course-${index + 1}`}><span>{name}</span><small>{level}</small></label>)}
+    </div>
+    <div class="course-panels">
+      {courses.map(([name, content, level], index) => (
+        <article id={`course-panel-${index + 1}`} class="course-panel">
+          <h3><span class="course-level">{level} / </span>{name}</h3>
+          <p>{content}</p>
+        </article>
+      ))}
+    </div>
+  </fieldset>
+</section>

@@ -1,0 +1,55 @@
+---
+import type { Language } from '../../shared/content/i18n';
+interface Props { lang?: Language }
+const { lang = 'zh-Hant' } = Astro.props;
+import { profile as profileZh, profileEn } from './content/profile';
+import { facultyLabels } from './content/labels';
+const profile = lang === 'en' ? profileEn : profileZh;
+const text = facultyLabels[lang];
+import portrait from './assets/許協誌.jpeg?url';
+---
+<header id="profile" class="faculty-introduction">
+  <div class="faculty-page-title"><p class="eyebrow">IRSL / FACULTY</p><h1>{text.title}</h1></div>
+  <div class="faculty-profile">
+    <img class="faculty-portrait" src={portrait} width="115" height="160" alt={lang === 'en' ? `Portrait of ${profile.name}` : `${profile.name}老師`} />
+    <div class="faculty-identity">
+      <h2>{profile.name}</h2>
+      <p class="position">{profile.position}</p>
+      <p class="affiliation">{profile.affiliation}</p>
+    </div>
+    <dl class="profile-contact">
+      <div><dt>{text.email}</dt><dd><a href={`mailto:${profile.email}`}>{profile.email}</a></dd></div>
+      <div><dt>{text.phone}</dt><dd><a href={profile.phoneHref}>{profile.phone}</a></dd></div>
+      <div><dt>{text.works}</dt><dd><a href={profile.scholar}>{text.scholar}</a></dd></div>
+    </dl>
+  </div>
+</header>
+<style>
+  .faculty-introduction { padding: .5rem 0 3rem; }
+  .faculty-page-title { margin-bottom: 2rem; }
+  h1 { margin-bottom: 0; }
+  .faculty-profile { display: grid; grid-template-columns: 115px minmax(0, 1fr) minmax(260px, .9fr); align-items: center; gap: 2rem; }
+  .faculty-portrait { width: 115px; height: 160px; }
+  .faculty-identity h2 { font-size: 2rem; letter-spacing: .1em; margin-bottom: .6rem; }
+  .position { margin-bottom: .25rem; color: var(--accent); }
+  .affiliation { margin: 0; color: var(--muted); }
+  .profile-contact { padding-left: 2rem; border-left: 1px solid var(--line); margin: 0; min-width: 0; }
+  .profile-contact > div + div { margin-top: .65rem; }
+  dt { font-size: .875rem; color: var(--muted); }
+  dd { margin: 0; overflow-wrap: anywhere; }
+  :global(html[lang="en"]) .faculty-identity h2 { letter-spacing: 0; }
+  @media (max-width: 1000px) {
+    .faculty-profile { grid-template-columns: 115px minmax(0, 1fr); gap: 1.5rem; }
+    .profile-contact { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; padding: 1.5rem 0 0; border-left: 0; border-top: 1px solid var(--line); }
+    .profile-contact > div + div { margin: 0; }
+  }
+  @media (max-width: 480px) {
+    .faculty-introduction { padding: 0 0 2rem; }
+    .faculty-page-title { margin-bottom: 1.5rem; }
+    .faculty-profile { gap: 1.25rem; }
+    :global(html[lang="en"]) .faculty-profile { grid-template-columns: 1fr; }
+    .faculty-identity h2 { font-size: 1.65rem; }
+    .profile-contact { display: block; }
+    .profile-contact > div + div { margin-top: .75rem; }
+  }
+</style>

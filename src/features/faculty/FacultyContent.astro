@@ -1,0 +1,38 @@
+---
+import type { Language } from '../../shared/content/i18n';
+interface Props { lang?: Language }
+const { lang = 'zh-Hant' } = Astro.props;
+import ContentSection from '../../shared/components/ContentSection.astro';
+import AcademicRecord from './AcademicRecord.astro';
+import CoursePicker from './CoursePicker.astro';
+import { Content as Journals } from './content/journals.md';
+import { Content as Conferences } from './content/conferences.md';
+import { Content as Patents } from './content/patents.md';
+import { Content as AwardsZh } from './content/awards.md';
+import { Content as AwardsEn } from './content/awards.en.md';
+import { facultyLabels } from './content/labels';
+const text = facultyLabels[lang];
+const Awards = lang === 'en' ? AwardsEn : AwardsZh;
+import './faculty.css';
+---
+    <div class="faculty-layout">
+      <aside class="faculty-index">
+        <nav class="desktop-index" aria-label={text.sections}>
+          <p class="eyebrow">{text.contents}</p>
+          <a href="#profile">{text.profile}</a><a href="#education">{text.education}</a><a class="index-sub" href="#experience">{text.experience}</a>
+          <a href="#journals">{text.publications}</a><a class="index-sub" href="#journals">{text.journals}</a><a class="index-sub" href="#conferences">{text.conferences}</a><a class="index-sub" href="#patents">{text.patents}</a>
+          <a href="#awards">{text.awards}</a>
+          <a href="#teaching">{text.teaching}</a>
+        </nav>
+        <details class="mobile-index"><summary>{text.mobileContents}</summary><nav aria-label={text.mobileSections}><a href="#profile">{text.profile}</a><a href="#education">{text.education}</a><a href="#experience">{text.shortExperience}</a><a href="#journals">{text.journals}</a><a href="#conferences">{text.conferences}</a><a href="#patents">{text.patents}</a><a href="#awards">{text.awards}</a><a href="#teaching">{text.teaching}</a></nav></details>
+      </aside>
+      <div class="faculty-content">
+        <AcademicRecord lang={lang} />
+        <ContentSection id="journals" title={text.journals}><Journals /></ContentSection>
+        <ContentSection id="conferences" title={text.conferences}><Conferences /></ContentSection>
+        <ContentSection id="patents" title={text.patents}><Patents /></ContentSection>
+        <ContentSection id="awards" title={text.awards}><Awards /></ContentSection>
+        <header id="teaching" class="chapter-heading"><p class="section-kicker">TEACHING</p><h2>{text.teaching}</h2></header>
+        <CoursePicker lang={lang} />
+      </div>
+    </div>
